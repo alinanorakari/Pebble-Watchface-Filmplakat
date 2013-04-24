@@ -1,0 +1,33 @@
+{
+ "friendlyVersion": "0.1",
+ "versionDefName": "APP_RESOURCES",
+
+ "media": [
+     {"type": "png",
+      "defName": "IMAGE_MENU_ICON",
+      "file": "images/menu_icon_filmplakat.png"
+     },
+     {"type":"font",
+      "characterRegex": "[einzwdrvfünschbatulö]",
+      "defName":"FONT_ROBOTO_BOLDITALIC_30",
+      "file":"fonts/roboto/Roboto-BoldItalic_30.ttf"
+     },
+     {"type":"font",
+      "characterRegex": "[einzwdrvfünschbatulög]",
+      "trackingAdjust": -2,
+      "defName":"FONT_ROBOTO_ITALIC_30",
+      "file":"fonts/roboto/Roboto-Italic_30.ttf"
+     },
+     {"type":"font",
+      "characterRegex": "[uhr]",
+      "trackingAdjust": -2,
+      "defName":"FONT_ROBOTO_LIGHTITALIC_28",
+      "file":"fonts/roboto/Roboto-LightItalic_28.ttf"
+     },
+     {"type":"font",
+      "characterRegex": "[0-9 .MDFSJAONoiranuebäzplgstmkv]",
+      "defName":"FONT_ROBOTO_ITALIC_12",
+      "file":"fonts/roboto/Roboto-Italic_12.ttf"
+     }
+  ]
+}
