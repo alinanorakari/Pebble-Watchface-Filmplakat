@@ -7,7 +7,7 @@
 #define MY_UUID { 0x42, 0x35, 0x46, 0xE7, 0x54, 0x18, 0x4F, 0x47, 0x96, 0x63, 0xF0, 0xDB, 0x98, 0x7C, 0x04, 0x40 }
 PBL_APP_INFO(MY_UUID,
              "Filmplakat", "lastfuture",
-             2, 0, /* App version */
+             2, 1, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
 #if DEBUG
              APP_INFO_STANDARD_APP
@@ -167,9 +167,15 @@ static const int DATE_ASC = 36;
 static const int MINUTES_X = 5;
 static const int MINUTES2_X = 5;
 
-void setup_text_layer(TextLayer* row, PropertyAnimation *this_anim, int x, int y, int oldx, int oldy, GFont font, int magic, bool delayed){
+void setup_text_layer(TextLayer* row, PropertyAnimation *this_anim, int x, int y, int oldx, int oldy, GFont font, int magic, bool delayed, bool black){
+    int rectheight = 50;
     text_layer_set_text_color(row, GColorWhite);
-    text_layer_set_background_color(row, GColorClear);
+    if (black) {
+        text_layer_set_background_color(row, GColorBlack);
+        rectheight = 37;
+    } else {
+        text_layer_set_background_color(row, GColorClear);
+    }
     layer_add_child(&window.layer, &row->layer);
     text_layer_set_font(row,font);
     
@@ -188,15 +194,15 @@ void setup_text_layer(TextLayer* row, PropertyAnimation *this_anim, int x, int y
         speed = 500;
     }
     
-    GRect start_rect = GRect(oldx,oldy,144-oldx-1,50);
-    GRect target_rect = GRect(x,y,144-x-1,50);
+    GRect start_rect = GRect(oldx,oldy,144-oldx-1,rectheight);
+    GRect target_rect = GRect(x,y,144-x-1,rectheight);
     
     if (magic == 1) { // disappear
-        start_rect = GRect(oldx,oldy,144-oldx-1,50);
-        target_rect = GRect(-114,oldy,144-oldx-1,50);
+        start_rect = GRect(oldx,oldy,144-oldx-1,rectheight);
+        target_rect = GRect(-114,oldy,144-oldx-1,rectheight);
     } else if (magic == 2) { // reappear
-        start_rect = GRect(144,y,144-x-1,50);
-        target_rect = GRect(x,y,144-x-1,50);
+        start_rect = GRect(144,y,144-x-1,rectheight);
+        target_rect = GRect(x,y,144-x-1,rectheight);
     } else if (magic == 3) { // and stay down
         start_rect = GRect(0,0,0,0);
         target_rect = GRect(0,0,0,0);
@@ -388,22 +394,22 @@ void update_time(PblTm* t){
     int magic = 0;
     bool haschanged = false;
     
+    setup_text_layer(&row_2,&anim_2,row_2_x,row_2_y,row_2_oldx,row_2_oldy,fontUhr,0,false,false);
+    text_layer_set_text(&row_2,ROW_2_BUFFER);
+
     if (strcmp(row_1_oldbuf,row_1_buffer)) { haschanged = true; } else { haschanged = false; }
     
     if (haschanged && firstblood != true) {
-        setup_text_layer(&row_1,&anim_1,-144,row_1_oldy,row_1_oldx,row_1_oldy,fontHour,0,false);
+        setup_text_layer(&row_1,&anim_1,-144,row_1_oldy,row_1_oldx,row_1_oldy,fontHour,0,false,true);
         text_layer_set_text(&row_1,row_1_oldbuf);
-        setup_text_layer(&row_1b,&anim_1b,row_1_x,row_1_y,144,row_1_y,fontHour,magic,true);
+        setup_text_layer(&row_1b,&anim_1b,row_1_x,row_1_y,144,row_1_y,fontHour,magic,true,true);
         text_layer_set_text(&row_1b,row_1_buffer);
     } else {
-        setup_text_layer(&row_1,&anim_1,row_1_x,row_1_y,row_1_oldx,row_1_oldy,fontHour,0,true);
+        setup_text_layer(&row_1,&anim_1,row_1_x,row_1_y,row_1_oldx,row_1_oldy,fontHour,0,true,true);
         text_layer_set_text(&row_1,row_1_buffer);
         text_layer_set_text(&row_1b,STR_SPACE);
     }
-    
-    setup_text_layer(&row_2,&anim_2,row_2_x,row_2_y,row_2_oldx,row_2_oldy,fontUhr,0,false);
-    text_layer_set_text(&row_2,ROW_2_BUFFER);
-    
+        
     if (strcmp(row_3_oldbuf,row_3_buffer)) { haschanged = true; } else { haschanged = false; }
     
     if (has_row_3 == has_row_3_old && has_row_3 == true) {
@@ -418,22 +424,22 @@ void update_time(PblTm* t){
     if (magic == 0) {
         if (haschanged) {
             if (tenplusone) {
-                setup_text_layer(&row_3,&anim_3,row_3_x,row_3_y,144,row_3_y,fontMinutes,magic,true);
+                setup_text_layer(&row_3,&anim_3,row_3_x,row_3_y,144,row_3_y,fontMinutes,magic,true,false);
                 text_layer_set_text(&row_3,row_3_buffer);
                 text_layer_set_text(&row_3b,STR_SPACE);
             } else {
-                setup_text_layer(&row_3,&anim_3,-144,row_3_oldy,row_3_oldx,row_3_oldy,fontMinutes,magic,false);
+                setup_text_layer(&row_3,&anim_3,-144,row_3_oldy,row_3_oldx,row_3_oldy,fontMinutes,magic,false,false);
                 text_layer_set_text(&row_3,row_3_oldbuf);
-                setup_text_layer(&row_3b,&anim_3b,row_3_x,row_3_y,144,row_3_y,fontMinutes,magic,true);
+                setup_text_layer(&row_3b,&anim_3b,row_3_x,row_3_y,144,row_3_y,fontMinutes,magic,true,false);
                 text_layer_set_text(&row_3b,row_3_buffer);
             }
         } else {
-            setup_text_layer(&row_3,&anim_3,row_3_x,row_3_y,row_3_oldx,row_3_oldy,fontMinutes,magic,false);
+            setup_text_layer(&row_3,&anim_3,row_3_x,row_3_y,row_3_oldx,row_3_oldy,fontMinutes,magic,false,false);
             text_layer_set_text(&row_3,row_3_buffer);
             text_layer_set_text(&row_3b,STR_SPACE);
         }
     } else {
-        setup_text_layer(&row_3,&anim_3,row_3_x,row_3_y,row_3_oldx,row_3_oldy,fontMinutes,magic,false);
+        setup_text_layer(&row_3,&anim_3,row_3_x,row_3_y,row_3_oldx,row_3_oldy,fontMinutes,magic,false,false);
         if (magic == 1) {
             text_layer_set_text(&row_3,row_3_oldbuf);
         } else {
@@ -454,22 +460,22 @@ void update_time(PblTm* t){
         magic = 2; // reappear
     }
     if (tenplusone) {
-        setup_text_layer(&row_4,&anim_4,row_4_x,row_4_y,row_3_oldx,row_3_oldy,fontMinutes,0,false);
+        setup_text_layer(&row_4,&anim_4,row_4_x,row_4_y,row_3_oldx,row_3_oldy,fontMinutes,0,false,false);
         text_layer_set_text(&row_4,row_4_buffer);
         text_layer_set_text(&row_4b,STR_SPACE);
     } else if (magic == 0) {
         if (haschanged) {
-            setup_text_layer(&row_4,&anim_4,-144,row_4_oldy,row_4_oldx,row_4_oldy,fontMinutes,magic,false);
+            setup_text_layer(&row_4,&anim_4,-144,row_4_oldy,row_4_oldx,row_4_oldy,fontMinutes,magic,false,false);
             text_layer_set_text(&row_4,row_4_oldbuf);
-            setup_text_layer(&row_4b,&anim_4b,row_4_x,row_4_y,144,row_4_y,fontMinutes,magic,true);
+            setup_text_layer(&row_4b,&anim_4b,row_4_x,row_4_y,144,row_4_y,fontMinutes,magic,true,false);
             text_layer_set_text(&row_4b,row_4_buffer);
         } else {
-            setup_text_layer(&row_4,&anim_4,row_4_x,row_4_y,row_4_oldx,row_4_oldy,fontMinutes,magic,false);
+            setup_text_layer(&row_4,&anim_4,row_4_x,row_4_y,row_4_oldx,row_4_oldy,fontMinutes,magic,false,false);
             text_layer_set_text(&row_4,row_4_buffer);
             text_layer_set_text(&row_4b,STR_SPACE);
         }
     } else {
-        setup_text_layer(&row_4,&anim_4,row_4_x,row_4_y,row_4_oldx,row_4_oldy,fontMinutes,magic,false);
+        setup_text_layer(&row_4,&anim_4,row_4_x,row_4_y,row_4_oldx,row_4_oldy,fontMinutes,magic,false,false);
         if (magic == 1) {
             text_layer_set_text(&row_4,row_4_oldbuf);
         } else {
@@ -481,12 +487,12 @@ void update_time(PblTm* t){
     if (strcmp(row_5_oldbuf,row_5_buffer)) { haschanged = true; } else { haschanged = false; }
     
     if (haschanged && firstblood != true) {
-        setup_text_layer(&row_5,&anim_5,-144,row_5_oldy,row_5_oldx,row_5_oldy,fontDate,0,false);
+        setup_text_layer(&row_5,&anim_5,-144,row_5_oldy,row_5_oldx,row_5_oldy,fontDate,0,false,false);
         text_layer_set_text(&row_5,row_5_oldbuf);
-        setup_text_layer(&row_5b,&anim_5b,row_5_x,row_5_y,144,row_5_y,fontDate,magic,true);
+        setup_text_layer(&row_5b,&anim_5b,row_5_x,row_5_y,144,row_5_y,fontDate,magic,true,false);
         text_layer_set_text(&row_5b,row_5_buffer);
     } else {
-        setup_text_layer(&row_5,&anim_5,row_5_x,row_5_y,row_5_oldx,row_5_oldy,fontDate,0,true);
+        setup_text_layer(&row_5,&anim_5,row_5_x,row_5_y,row_5_oldx,row_5_oldy,fontDate,0,true,false);
         text_layer_set_text(&row_5,row_5_buffer);
         text_layer_set_text(&row_5b,STR_SPACE);
     }
@@ -521,15 +527,16 @@ void handle_init(AppContextRef ctx) {
     memset(row_4_buffer,0,20);
     memset(row_5_buffer,0,20);
     
-    text_layer_init(&row_1, window.layer.frame);
     text_layer_init(&row_2, window.layer.frame);
     text_layer_init(&row_3, window.layer.frame);
     text_layer_init(&row_4, window.layer.frame);
     text_layer_init(&row_5, window.layer.frame);
-    text_layer_init(&row_1b, window.layer.frame);
     text_layer_init(&row_3b, window.layer.frame);
     text_layer_init(&row_4b, window.layer.frame);
     text_layer_init(&row_5b, window.layer.frame);
+    
+    text_layer_init(&row_1, window.layer.frame);
+    text_layer_init(&row_1b, window.layer.frame);
     
     get_time(&t);
 }
