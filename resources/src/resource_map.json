@@ -9,25 +9,26 @@
      },
      {"type":"font",
       "characterRegex": "[einzwdrvfünschbatulö]",
-      "defName":"FONT_ROBOTO_BOLDITALIC_30",
-      "file":"fonts/roboto/Roboto-BoldItalic_30.ttf"
+      "trackingAdjust": -1,
+      "defName":"FONT_ROBOTO_BOLDITALIC_35",
+      "file":"fonts/roboto/Roboto-BoldItalic_35.ttf"
      },
      {"type":"font",
-      "characterRegex": "[einzwdrvfünschbatulög]",
+      "characterRegex": "[einzwdrvfünschbatulögı]",
       "trackingAdjust": -2,
-      "defName":"FONT_ROBOTO_ITALIC_30",
-      "file":"fonts/roboto/Roboto-Italic_30.ttf"
+      "defName":"FONT_ROBOTO_ITALIC_33",
+      "file":"fonts/roboto/Roboto-Italic_33.ttf"
      },
      {"type":"font",
       "characterRegex": "[uhr]",
       "trackingAdjust": -2,
-      "defName":"FONT_ROBOTO_LIGHTITALIC_28",
-      "file":"fonts/roboto/Roboto-LightItalic_28.ttf"
+      "defName":"FONT_ROBOTO_LIGHTITALIC_30",
+      "file":"fonts/roboto/Roboto-LightItalic_30.ttf"
      },
      {"type":"font",
       "characterRegex": "[0-9 .MDFSJAONoiranuebäzplgstmkv]",
-      "defName":"FONT_ROBOTO_ITALIC_12",
-      "file":"fonts/roboto/Roboto-Italic_12.ttf"
+      "defName":"FONT_ROBOTO_ITALIC_13",
+      "file":"fonts/roboto/Roboto-Italic_13.ttf"
      }
   ]
 }
