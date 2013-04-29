@@ -7,7 +7,7 @@
 #define MY_UUID { 0x42, 0x35, 0x46, 0xE7, 0x54, 0x18, 0x4F, 0x47, 0x96, 0x63, 0xF0, 0xDB, 0x98, 0x7C, 0x04, 0x40 }
 PBL_APP_INFO(MY_UUID,
              "Filmplakat", "lastfuture",
-             2, 1, /* App version */
+             2, 2, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
 #if DEBUG
              APP_INFO_STANDARD_APP
@@ -388,6 +388,8 @@ void update_time(PblTm* t){
         row_3_oldy = row_3_y;
         row_4_oldy = row_4_y;
         row_5_oldy = row_5_y;
+        
+        tenplusone = false;
     }
     
     
