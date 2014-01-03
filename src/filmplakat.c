@@ -110,14 +110,14 @@ static const char* TEENS_DOTLESS[] = {
 };
 static const char* TENS[] = {
     "zwanzig",
-    "dreissig",
+    "dreißig",
     "vierzig",
     "fünfzig",
     "sechzig",
 };
 static const char* TENS_DOTLESS[] = {
     "zwanzıg",
-    "dreissig",
+    "dreißig",
     "vıerzıg",
     "fünfzig",
     "sechzig",
